@@ -10,8 +10,12 @@ require (
 	github.com/bgentry/speakeasy v0.1.0 // indirect
 	github.com/denisenkom/go-mssqldb v0.9.0 // indirect
 	github.com/fatih/color v1.13.0 // indirect
+	github.com/gabriel-vasile/mimetype v1.4.12 // indirect
 	github.com/go-gorp/gorp/v3 v3.1.0 // indirect
 	github.com/go-logfmt/logfmt v0.6.0 // indirect
+	github.com/go-playground/locales v0.14.1 // indirect
+	github.com/go-playground/universal-translator v0.18.1 // indirect
+	github.com/go-playground/validator/v10 v10.30.1 // indirect
 	github.com/go-sql-driver/mysql v1.8.1 // indirect
 	github.com/godror/godror v0.40.4 // indirect
 	github.com/godror/knownpb v0.1.1 // indirect
@@ -23,6 +27,7 @@ require (
 	github.com/imdario/mergo v0.3.13 // indirect
 	github.com/jmoiron/sqlx v1.4.0 // indirect
 	github.com/joho/godotenv v1.5.1 // indirect
+	github.com/leodido/go-urn v1.4.0 // indirect
 	github.com/lib/pq v1.11.2 // indirect
 	github.com/mattn/go-colorable v0.1.13 // indirect
 	github.com/mattn/go-isatty v0.0.17 // indirect
@@ -37,9 +42,10 @@ require (
 	github.com/rubenv/sql-migrate v1.8.1 // indirect
 	github.com/shopspring/decimal v1.3.1 // indirect
 	github.com/spf13/cast v1.5.0 // indirect
-	golang.org/x/crypto v0.45.0 // indirect
+	golang.org/x/crypto v0.46.0 // indirect
 	golang.org/x/exp v0.0.0-20230905200255-921286631fa9 // indirect
-	golang.org/x/sys v0.38.0 // indirect
+	golang.org/x/sys v0.39.0 // indirect
+	golang.org/x/text v0.32.0 // indirect
 	google.golang.org/protobuf v1.33.0 // indirect
 	gopkg.in/yaml.v2 v2.4.0 // indirect
 )

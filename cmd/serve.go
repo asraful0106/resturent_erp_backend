@@ -5,7 +5,13 @@ import (
 	"os"
 	"resturent-erp/configs"
 	"resturent-erp/infrastructure/database"
+	"resturent-erp/internal/application/owner"
+	"resturent-erp/repo"
 	"resturent-erp/rest"
+	"resturent-erp/rest/middlewares"
+	"resturent-erp/utils"
+
+	ownerHandler "resturent-erp/rest/handlers/owner"
 )
 
 func Serve() {
@@ -34,9 +40,24 @@ func Serve() {
 	// Migration
 	database.MigrateDB(dbConnection, "./infrastructure/database/migrations", cfg.Environment)
 
+	// For Utils
+	dependencyUtils := utils.NewDependency(cfg)
+	// For Middlewares
+	dependencyMiddleware := middlewares.NewDipendency(cfg, dependencyUtils)
+
+	// Reopos
+	ownerRepo := repo.NewUserRepo(dbConnection)
+
+	// Domains
+	ownerSvc := owner.NewService(ownerRepo)
+
+	// Handlers
+	ownerHandler := ownerHandler.NewHandler(dependencyUtils, ownerSvc, dependencyMiddleware)
+
 	// Starting the server
 	server := rest.NewServer(
 		cfg,
+		ownerHandler,
 	)
 	server.StartServer()
 }

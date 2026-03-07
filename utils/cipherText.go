@@ -1,0 +1,16 @@
+package utils
+
+import "golang.org/x/crypto/bcrypt"
+
+func CreateCiphertext(plain string) (string, error) {
+	hash, err := bcrypt.GenerateFromPassword([]byte(plain), bcrypt.DefaultCost)
+	if err != nil {
+		return "", err
+	}
+	return string(hash), nil
+}
+
+// verifyCiphertext compares a stored hash with a plaintext password.
+func VerifyCiphertext(hash string, plain string) error {
+	return bcrypt.CompareHashAndPassword([]byte(hash), []byte(plain));
+}
