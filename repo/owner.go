@@ -26,8 +26,7 @@ func NewUserRepo(dbConnection *sqlx.DB,
 	}
 }
 
-func (u *ownerRepo) CreateOwner(ctx context.Context, owner domain.Owner) (*domain.Owner, error) {
-	// Step1: Check is user exist
+func (u *ownerRepo) FindOwnerByEmail(email string) (*domain.Owner, error) {
 	var isEmailExist domain.Owner
 
 	emailQuery := `
@@ -35,14 +34,17 @@ func (u *ownerRepo) CreateOwner(ctx context.Context, owner domain.Owner) (*domai
 		FROM owners
 		WHERE email = $1;
 	`
-	err := u.db.Get(&isEmailExist, emailQuery, owner.Email)
+	err := u.db.Get(&isEmailExist, emailQuery, email)
 	if err != nil && !errors.Is(err, sql.ErrNoRows) {
 		return nil, err
 	}
 	if err != nil && isEmailExist.Email != "" {
 		return nil, errors.New("Email already exist")
 	}
+	return &isEmailExist, nil
+}
 
+func (u *ownerRepo) CreateOwner(ctx context.Context, owner domain.Owner) (*domain.Owner, error) {
 	// has plainttext password
 	hashedPassword, err := utils.CreateCiphertext(owner.PasswordHash)
 	if err != nil {
@@ -60,7 +62,7 @@ func (u *ownerRepo) CreateOwner(ctx context.Context, owner domain.Owner) (*domai
 	var createdOwner domain.Owner
 
 	err = u.db.QueryRowContext(ctx, query, owner.Name, owner.Email, owner.Phone, owner.PasswordHash).Scan(&createdOwner.Id, &createdOwner.Name, &createdOwner.Email, &createdOwner.Phone, &createdOwner.Role)
-	
+
 	if err != nil {
 		return nil, err
 	}

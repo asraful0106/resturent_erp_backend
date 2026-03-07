@@ -39,6 +39,18 @@ func (h *Handler) CreateOwner(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
+	isOwnerExist, err := h.svc.FindOwnerByEmail(newOwner.Email)
+
+	if err != nil {
+		h.dependecyUtils.ErrorResponse(w, err, http.StatusInternalServerError, "Unable to create user.")
+		return
+	}
+
+	if isOwnerExist.Email != "" {
+		h.dependecyUtils.ErrorResponse(w, err, http.StatusConflict, "User already exist.")
+		return
+	}
+
 	ctx := r.Context()
 
 	createOwner, err := h.svc.CreateOwner(ctx, domain.Owner{

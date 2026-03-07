@@ -15,6 +15,18 @@ func NewService(ownerRepo OwnerRepo) Service {
 	}
 }
 
+func (svc *service) FindOwnerByEmail(email string) (*domain.Owner, error) {
+	isOwner, err := svc.ownerRepo.FindOwnerByEmail(email)
+
+	if err != nil {
+		return nil, err
+	}
+	if isOwner == nil {
+		return nil, nil
+	}
+	return isOwner, nil
+}
+
 func (svc *service) CreateOwner(ctx context.Context, owner domain.Owner) (*domain.Owner, error) {
 	cteateOwner, err := svc.ownerRepo.CreateOwner(ctx, owner)
 
